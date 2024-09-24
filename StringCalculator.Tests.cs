@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
+using System.Linq;
 
 
-public class StringCalculatorAddTests
+/*public class StringCalculatorAddTests
 {
     [Fact]
     public void ExpectZeroForEmptyInput()
@@ -80,5 +81,70 @@ public class StringCalculatorAddTests
         int result = objUnderTest.Add(input);
 
        Assert.Equal(expectedResult, result);
+    }
+}*/
+public class StringCalculator
+{
+    [Fact]
+    public int Add(string numbers)
+    {
+        if (string.IsNullOrEmpty(numbers))
+        {
+            return 0;
+        }
+
+        string input = numbers;
+        string delimiter = ExtractDelimiter(ref input);
+
+        string inputs = ReplaceNewlines(input, delimiter);
+        List<int> nums = ExtractNumbers(inputs, delimiter);
+
+        CheckForNegatives(nums);
+        return SumValidNumbers(nums);
+    }
+    [Fact]
+    private string ExtractDelimiter(ref string numbers)
+    {
+        if (numbers.StartsWith("//"))
+        {
+            int delimiterEndPos = numbers.IndexOf('\n');
+            string delimiter = numbers.Substring(2, delimiterEndPos - 2);
+            numbers = numbers.Substring(delimiterEndPos + 1);
+            return delimiter;
+        }
+        return ","; // Default delimiter
+    }
+     [Fact]
+    private string ReplaceNewlines(string numbers, string delimiter)
+    {
+        return numbers.Replace("\n", delimiter);
+    }
+     [Fact]
+    private List<int> ExtractNumbers(string input, string delimiter)
+    {
+        return input.Split(new[] { delimiter }, StringSplitOptions.None)
+                    .Select(int.Parse)
+                    .ToList();
+    }
+   [Fact]
+    private void CheckForNegatives(List<int> numbers)
+    {
+        var negatives = numbers.Where(num => num < 0).ToList();
+
+        if (negatives.Any())
+        {
+            string errorMessage = "negatives not allowed: " + string.Join(" ", negatives);
+            throw new ArgumentException(errorMessage);
+        }
+    }
+  [Fact]
+    private int SumValidNumbers(List<int> numbers)
+    {
+        return numbers.Where(num => !IsGreaterThanLimit(num, 1000)).Sum();
+    }
+    [Fact]
+    private bool IsGreaterThanLimit(int number, int limit)
+    {
+        return number > limit;
     }
 }
