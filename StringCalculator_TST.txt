@@ -1,0 +1,46 @@
+Test Specification for StringCalculator
+
+Test Suit: StringCalculator
+Test Case1: ExpectZerofromEmptyInput
+Description: Verify that expected output for an empty input should be zero.
+Input Data:
+* Input: "" (an empty string)
+* Expected Output: 0 
+
+Test Case 2: ExpectZeroforSingleZero
+Description: Verify that expected output for Zero as SingleCharacter input should be zero.
+Input Data:
+* Input: "0" 
+* Expected Output: 0 
+
+Test Case 3: ExpectSumForTwoNumbers
+Description: Verify that expected output for string with two numbers returns sum of two numbers
+Input Data
+* Input: "1,2"
+* Expected Output: 3
+
+Test Case 4:ExpectExceptionForNegativeNumbers
+Description: Verify that expected output for negative numbers returns exception
+Input Data
+* Input: "-1,2" 
+* Expected Output: "Negatives not allowed"
+
+Test Case 5: ExceptSumWithNewlineDelimiter
+ Description: Verify that output for input that includes newline delimiter returns sum of the numbers
+Input Data
+* Input: "1\n2,3"
+* Expected Output: 6
+
+Test Case 7: IgnoreNumbersGreaterThan1000
+Description: verify that  input greater than 1000 is ignored 
+Input Data
+* Input: "1,10001"
+* Expected Output: 1
+
+Test Case 8: ExpectSumWithCustomDelimiter
+Description: Verify that output for input with numbers and custom delimiters returns sum of numbers
+Input Data
+* Input: "//,\n1;2" 
+* Expected Output: 3
+
+
