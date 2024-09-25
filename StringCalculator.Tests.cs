@@ -1,10 +1,46 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
-using System.Linq;
-
 
 public class StringCalculatorAddTests
+{
+    private readonly StringCalculator_stringCalculator;
+
+    public StringCalculatorAddTests();
+    {
+        _stringCalculator = new StringCalculator();
+    }
+    [Fact]
+    [Theory]
+    [InlineData("",0]
+    [InlineData("0",0)]
+    [InlineData("5",5)]
+    [InlineData("1,2",3)]
+    [InlineData("1\n2,3",3)]
+    [InlineData("//;\n1;2",3)]
+    [InlineData("1,1001",1)]
+    [InlineData("1,2,3,4,5",15)]
+    public void Add_ShouldReturnExpectedResult(string input,int expected)
+        {
+            int result =_stringCalculator.Add(input);
+            Assert.Equal(expected,result);
+        }
+    [Fact]
+    [Theory]
+    [InlineData("-1,2",Negatives not allowed: -1")]
+    [InlineData("-1,-2","Negatives not allowed: -1,-2")]
+    [InlineData("//;\n-1;2",Negatives not allowed: -1")]
+    public void Add_InputContainsNegativeNumbers_ShouldThrowException(string input, string expectedMessage)
+        {
+            var exception = Assert.Throws<InvalidOperationException>(() => _stringCalculator.Add(input));
+            Assert.Equal(exceptedMessage, exception.Message);
+        }
+    }
+                
+            
+                                            
+
+/*public class StringCalculatorAddTests
 {
     [Fact]
     public void ExpectZeroForEmptyInput()
@@ -82,4 +118,4 @@ public class StringCalculatorAddTests
 
        Assert.Equal(expectedResult, result);
     }
-}
+}*/
