@@ -5,8 +5,22 @@ using System.Linq;
 
 public class StringCalculator
 {
+    public int Add(string numbers)
+    {
+        if (string.IsNullOrEmpty(numbers))
+        {
+            return 0;
+        }
 
-public static string[] GetDelimiters(string numbers, out string numbersWithoutDelimiters)
+        string[] delimiters = Util.GetDelimiters(numbers, out string numbersWithoutDelimiters);
+        List<int> numberList = Util.ParseNumbers(numbersWithoutDelimiters, delimiters);
+        Util.ValidateNegNums(numberList);
+        return Util.SumCalculator(numberList);
+    }
+}
+public static class Util
+{
+    public static string[] GetDelimiters(string numbers, out string numbersWithoutDelimiters)
     {
         string[] delimiters = new string[] { ",", "\n" };
         numbersWithoutDelimiters = numbers;
@@ -43,17 +57,6 @@ public static string[] GetDelimiters(string numbers, out string numbersWithoutDe
     }
 }
     
-    public int Add(string numbers)
-    {
-        if (string.IsNullOrEmpty(numbers))
-        {
-            return 0;
-        }
-
-        string[] delimiters = StringCalculator.GetDelimiters(numbers, out string numbersWithoutDelimiters);
-        List<int> numberList = StringCalculator.ParseNumbers(numbersWithoutDelimiters, delimiters);
-        StringCalculator.ValidateNegNums(numberList);
-        return StringCalculator.SumCalculator(numberList);
-    }
 }
+
    
